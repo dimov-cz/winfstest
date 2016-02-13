@@ -91,13 +91,16 @@ if "__main__" == __name__:
         okstr = "\x1B[32mok\x1B[0m" if colors else "ok"
         kostr = "\x1B[31mnot ok\x1B[0m" if colors else "not ok"
         totals = [0, 0]
-        for arg in sys.argv[1:]:
+        testenv_tmppath = ""
+        if len(sys.argv)>2:
+			testenv_tmppath = sys.argv[2]
+        for arg in [sys.argv[1]]:
             for dirpath, dirnames, filenames in walktree(arg):
                 for filename in filenames:
                     if filename.endswith(".t"):
                         filename = os.path.join(dirpath, filename)
                         writehead(filename)
-                        out = subprocess.check_output([sys.executable, filename],
+                        out = subprocess.check_output([sys.executable, filename, testenv_tmppath],
                             stderr=subprocess.STDOUT, universal_newlines=True)
                         for i in parse(out.splitlines()):
                             if "RR" == i[0]:

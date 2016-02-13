@@ -54,7 +54,10 @@ def testdone():
     _ntests = 0
 
 def uniqname():
-    return "%08x" % random.randint(1, 2 ** 32)
+    path = ""
+    if len(sys.argv)>0:
+        path = os.path.normpath(sys.argv[1]) + "\\"
+    return path + "%08x" % random.randint(1, 2 ** 32)
 
 _fstest_exe = os.path.splitext(os.path.realpath(__file__))[0] + ".exe"
 class _fstest_task(object):
