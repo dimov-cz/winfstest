@@ -1,0 +1,8 @@
+/winfstest/Debug
+/TestSuite/winfstest.exe
+/TestSuite/winfstest.ilk
+/TestSuite/winfstest.pdb
+/winfstest.VC.opendb
+/TestSuite/*.pyc
+/.vs/winfstest/v14/.suo
+/winfstest.sdf
