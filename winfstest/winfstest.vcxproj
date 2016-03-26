@@ -70,19 +70,19 @@
     <NMakeIncludeSearchPath>
     </NMakeIncludeSearchPath>
     <NMakeCleanCommandLine>DeleteFile notexist.tmp</NMakeCleanCommandLine>
-    <OutDir>$(SolutionDir)TestSuite</OutDir>
+    <OutDir>$(SolutionDir)TestSuite\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <NMakeOutput>winfstest.exe</NMakeOutput>
     <NMakePreprocessorDefinitions>WIN32;NDEBUG;$(NMakePreprocessorDefinitions)</NMakePreprocessorDefinitions>
     <NMakeBuildCommandLine>cl /MT /W2 winfstest.c /link /subsystem:console </NMakeBuildCommandLine>
-    <OutDir>$(SolutionDir)TestSuite</OutDir>
+    <OutDir>$(SolutionDir)TestSuite\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>$(SolutionDir)TestSuite</OutDir>
+    <OutDir>$(SolutionDir)TestSuite\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <OutDir>$(SolutionDir)TestSuite</OutDir>
+    <OutDir>$(SolutionDir)TestSuite\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

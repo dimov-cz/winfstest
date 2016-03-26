@@ -464,7 +464,7 @@ static int do_RenameStream(int argc, wchar_t **argv)
     if (argc != 4 || ':' != argv[2][0])
         fail("usage: RenameStream FileName:ExistingStreamName :NewStreamName ReplaceIfExists");
     fail("not implemented!");
-#if 0
+
     HANDLE h = CreateFileW(argv[1],
         DELETE | SYNCHRONIZE, FILE_SHARE_READ | FILE_SHARE_WRITE | FILE_SHARE_DELETE,
         0, OPEN_EXISTING, FILE_FLAG_OPEN_REPARSE_POINT | FILE_FLAG_BACKUP_SEMANTICS, 0);
@@ -494,7 +494,7 @@ static int do_RenameStream(int argc, wchar_t **argv)
         errprint(r);
         CloseHandle(h);
     }
-#endif
+
     return 0;
 }
 static void usage()
