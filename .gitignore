@@ -11,3 +11,4 @@
 /winfstest/Release
 /winfstest/*.obj
 /winfstest/*.exe
+/*.db
