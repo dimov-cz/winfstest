@@ -61,10 +61,11 @@ def uniqname():
 
 _fstest_exe = os.path.splitext(os.path.realpath(__file__))[0] + ".exe"
 class _fstest_task(object):
-    def __init__(self, tsk, cmd, exp):
+    def __init__(self, tsk, cmd, exp, expdiagvalue = ""):
         self.tsk = tsk
         self.cmd = cmd
         self.exp = exp
+        self.expdiagvalue = expdiagvalue
         self.out = None
         self.err = None
         self.res = None
@@ -91,7 +92,7 @@ class _fstest_task(object):
             raise subprocess.CalledProcessError(ret, self.cmd)
         self.err, self.res = self._fstest_res()
         if self.exp is not None:
-            self._expect(self.cmd, self.exp, self.err, self.res)
+            self._expect(self.cmd, self.exp, self.err, self.res, self.expdiagvalue)
     def _readthread(self):
         self.out = self.prc.stdout.read()
         self.out = self.out.replace("\r\n", "\n").replace("\r", "\n")
@@ -114,16 +115,19 @@ class _fstest_task(object):
                         pass
                 d[k] = v
         return out[0], res
-    def _expect(self, cmd, exp, err, res):
+    def _expect(self, cmd, exp, err, res, expdiagvalue=""):
         s = "expect" if not self.tsk else "expect_task"
+        diagmore = "-"
+        if isinstance(expdiagvalue, types.FunctionType):
+            diagmore = expdiagvalue(res)
         if isinstance(exp, types.FunctionType): # function, lambda
             if "0" == err:
-                testline(exp(res), "%s \"%s\" %s" % (s, cmd, exp.__name__))
+                testline(exp(res), "%s \"%s\" %s %s" % (s, cmd, exp.__name__, diagmore))
             else:
                 testline(0, "%s \"%s\" %s - got %s" % (s, cmd, 0, err))
         else:
             if str(exp) == err:
-                testline(1, "%s \"%s\" %s" % (s, cmd, exp))
+                testline(1, "%s \"%s\" %s %s" % (s, cmd, exp, diagmore))
             else:
                 testline(0, "%s \"%s\" %s - got %s" % (s, cmd, exp, err))
 
@@ -131,9 +135,9 @@ def fstest(cmd):
     with _fstest_task(False, cmd, None) as task:
         pass
     return task.err, task.res
-def expect(cmd, exp):
-    with _fstest_task(False, cmd, exp) as task:
-        pass
+def expect(cmd, exp, expdiagvalue = ""):
+    with _fstest_task(False, cmd, exp, expdiagvalue) as task:
+        pass                
     return task.err, task.res
 def fstest_task(cmd):
     return _fstest_task(True, cmd, None)
