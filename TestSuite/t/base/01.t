@@ -8,9 +8,20 @@ from winfstest import *
 name = uniqname()
 
 expect("CreateFile %s GENERIC_WRITE 0 0 CREATE_ALWAYS FILE_ATTRIBUTE_NORMAL 0" % name, 0)
-expect("GetFileInformation %s" % name, lambda r: r[0]["FileAttributes"] == 0x20)
+
+#0x2000 = FILE_ATTRIBUTE_NOT_CONTENT_INDEXED, 0x20 = FILE_ATTRIBUTE_ARCHIVE
+expect("GetFileInformation %s" % name, 
+        ( lambda r: r[0]["FileAttributes"]&~0x2000 == 0x20 ), 
+        ( lambda r: r[0]["FileAttributes"] ) 
+      )
+
 expect("CreateFile %s GENERIC_WRITE 0 0 CREATE_ALWAYS FILE_ATTRIBUTE_READONLY 0" % name, 0)
-expect("GetFileInformation %s" % name, lambda r: r[0]["FileAttributes"] == 0x21)
+
+expect("GetFileInformation %s" % name, 
+        lambda r: r[0]["FileAttributes"]&~0x2000 == 0x21,
+        lambda r: r[0]["FileAttributes"] 
+      )
+
 expect("SetFileAttributes %s FILE_ATTRIBUTE_NORMAL" % name, 0)
 expect("CreateFile %s GENERIC_WRITE 0 0 CREATE_ALWAYS FILE_ATTRIBUTE_SYSTEM 0" % name, 0)
 expect("GetFileInformation %s" % name, lambda r: r[0]["FileAttributes"] == 0x24)
