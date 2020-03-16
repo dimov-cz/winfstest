@@ -4,7 +4,7 @@
 /TestSuite/winfstest.pdb
 /winfstest.VC.opendb
 /TestSuite/*.pyc
-/.vs/winfstest/v14/.suo
+.vs
 /winfstest.sdf
 /winfstest/x64/Debug
 /winfstest/x64/Release
@@ -12,3 +12,5 @@
 /winfstest/*.obj
 /winfstest/*.exe
 /*.db
+__pycache__
+*.vcxproj.user
