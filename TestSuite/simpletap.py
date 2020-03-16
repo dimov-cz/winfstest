@@ -62,7 +62,7 @@ def parse(iter):
     if pl is None:
         yield ("RR", "?", ok, ko)
     else:
-        yield ("RR", set(xrange(pl[0], pl[1])) - ok - ko, ok, ko)
+        yield ("RR", set(range(pl[0], pl[1])) - ok - ko, ok, ko)
 
 if "__main__" == __name__:
     import os, subprocess, sys
@@ -93,7 +93,7 @@ if "__main__" == __name__:
         totals = [0, 0]
         testenv_tmppath = ""
         if len(sys.argv)>2:
-			testenv_tmppath = sys.argv[2]
+            testenv_tmppath = sys.argv[2]
         for arg in [sys.argv[1]]:
             for dirpath, dirnames, filenames in walktree(arg):
                 for filename in filenames:
@@ -141,8 +141,7 @@ if "__main__" == __name__:
 
     try:
         main()
-    except subprocess.CalledProcessError, ex:
-        print >>sys.stderr
-        print >>sys.stderr, ex
-        print >>sys.stderr, ex.output
+    except subprocess.CalledProcessError as ex:
+        print(ex)
+        print(ex.output)
         sys.exit(ex.returncode)
